@@ -1,0 +1,50 @@
+.logoimg {
+  height: 45px;
+}
+.maindiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+}
+.griddiv {
+  display: grid;
+  grid-template-columns: repeat(3, 20%);
+  grid-template-rows: auto;
+  justify-content: center;
+  row-gap: 3rem;
+  column-gap: 3rem;
+  padding: 1rem;
+  align-items: center;
+  margin-top: 4rem;
+}
+.griddiv > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+p {
+  text-align: center;
+}
+
+.notificationdiv {
+  background-color: #fff;
+  position: absolute;
+  top: 14%;
+  right: 3%;
+  height: 70vh;
+  width: 30%;
+  z-index: 9;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  float: left;
+  overflow: auto;
+}
+.clickdiv {
+  background-color: transparent;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+}
