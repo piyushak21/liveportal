@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
 
     axios
-      .post("/login/login-user", data)
+      .post("http://13.127.22.231:3001/login/login-user", data)
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("token", res.data.token);
