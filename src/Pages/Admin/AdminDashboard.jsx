@@ -3,7 +3,6 @@ import { BsPersonFill, BsFillCpuFill, BsTruck } from "react-icons/bs";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import styles from "../../CSS/AdminDashboard.module.css";
 
 const AdminDashboard = () => {
   const token = localStorage.getItem("token");
@@ -14,7 +13,7 @@ const AdminDashboard = () => {
 
   const getvehicleData = async () => {
     await axios
-      .get(`http://localhost:8080/api/vehicles/getall`, {
+      .get(`/vehicles/getall`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => setVehicleData(res.data.getData))
@@ -23,7 +22,7 @@ const AdminDashboard = () => {
 
   const getDevicesData = async () => {
     await axios
-      .get("http://localhost:8080/api/devices/getall", {
+      .get("/devices/getall", {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => setDevices(res.data.AllData))
@@ -32,7 +31,7 @@ const AdminDashboard = () => {
 
   const getCustomersData = async () => {
     await axios
-      .get(`http://localhost:8080/api/customers/getall`, {
+      .get(`/customers/getall`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
@@ -53,25 +52,38 @@ const AdminDashboard = () => {
         <div className="row mt-4">
           <div
             onClick={() => navigate("/users")}
-            className="col-md-3 shadow m-3 card-body py-4"
+            className="col-md-3"
           >
+            <div className="card border-0 shadow text-center text-muted">
+            <div className="card-body">
             <BsPersonFill className="h1 display-4 my-2" />
-            <h1 className="display-4">{customerData.length}</h1>
+            <h1 className="display-4 text-dark">{customerData.length}</h1>
             <h5>Customers</h5>
+            </div>
+            </div>
           </div>
+
           <div
             onClick={() => navigate("/devices")}
-            className="col-md-3 shadow m-3 card-body py-4 "
+            className="col-md-3"
           >
-            <BsFillCpuFill className="h1 display-4 my-2" />
-            <h1 className="display-4">{devices.length}</h1>
+            <div className="card border-0 shadow text-center text-muted">
+              <div className="card-body">
+              <BsFillCpuFill className="h1 display-4 my-2" />
+            <h1 className="display-4 text-dark">{devices.length}</h1>
             <h5>Devices</h5>
+              </div>
+            </div>
           </div>
-          <div className="col-md-3 shadow m-3 card-body py-4 ">
-            <BsTruck className="h1 display-4 my-2" />
-            <h1 className="display-4">{vehcicleData.length}</h1>
+          {/* <div className="col-md-3">
+            <div className="card border-0 shadow text-muted">
+              <div className="card-body text-center">
+              <BsTruck className="h1 display-4 my-2" />
+            <h1 className="display-4 text-dark">{vehcicleData.length}</h1>
             <h5>Vehicles</h5>
-          </div>
+              </div>
+            </div>
+          </div> */}
         </div>
       </Container>
     </div>

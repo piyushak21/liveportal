@@ -3,12 +3,11 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../../CSS/AddVehicle.module.css";
 import axios from "axios";
 
 const AddVehicle = () => {
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [iotData, setIotData] = useState([]);
   const [ecuData, setEcuData] = useState([]);
@@ -31,13 +30,9 @@ const AddVehicle = () => {
       data.featureset
     ) {
       axios
-        .post(
-          `http://localhost:8080/api/vehicles/addvehicle/${user_id}`,
-          data,
-          {
-            headers: { authorization: `bearer ${token}` },
-          }
-        )
+        .post(`/vehicles/addvehicle/${user_id}`, data, {
+          headers: { authorization: `bearer ${token}` },
+        })
         .then((res) => {
           console.log(res);
           alert("Vehicle Added Successfully");
@@ -53,7 +48,7 @@ const AddVehicle = () => {
   useEffect(() => {
     ///getting data of iot remaining
     axios
-      .get("http://localhost:8080/api/vehicles/get-iot", {
+      .get("/vehicles/get-iot", {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
@@ -65,7 +60,7 @@ const AddVehicle = () => {
 
     ///getting ecu remaining
     axios
-      .get("http://localhost:8080/api/vehicles/get-ecu", {
+      .get("/vehicles/get-ecu", {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

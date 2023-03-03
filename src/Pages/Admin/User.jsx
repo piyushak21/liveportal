@@ -17,7 +17,7 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/customers/getall`, {
+      .get(`/customers/getall`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

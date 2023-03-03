@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  BsPersonFill,
   BsFillCpuFill,
   BsRecycle,
   BsFillCheckSquareFill,
@@ -78,50 +77,50 @@ const CustomerDashboard = () => {
     <div>
       <Container className="mt-5">
         <div className="row">
-          <div className="col-md-3">
+          <div onClick={() => navigate("/vehicle")} className="col-md-3">
             <div className="card border-0 shadow">
-              <div className="card-body">
+              <div className="card-body text-center text-muted">
                 <BsTruck
-                  onClick={() => navigate("/vehicle")}
+                  
                   className="h1 display-4 my-2"
                 />
-                <h1 className="display-4">{vehicleData.length}</h1>
+                <h1 className="display-4 text-dark">{vehicleData.length}</h1>
                 <h5>Vehicle</h5>
               </div>
             </div>
           </div>
-          <div className="col-md-3">
+          <div onClick={() => navigate("/ongoing-trips")} className="col-md-3">
             <div className="card border-0 shadow">
-              <div className="card-body">
+              <div className="card-body text-center text-muted">
                 <BsRecycle
-                  onClick={() => navigate("/ongoing-trips")}
+                  
                   className="h1 display-4 my-2"
                 />
-                <h1 className="display-4">{tripsOngoing.length}</h1>
+                <h1 className="display-4 text-dark">{tripsOngoing.length}</h1>
                 <h5>Ongoing</h5>
               </div>
             </div>
           </div>
-          <div className="col-md-3">
+          <div onClick={() => navigate("/completed-trips/")} className="col-md-3">
             <div className="card border-0 shadow">
-              <div className="card-body">
+              <div className="card-body text-center text-muted">
                 <BsFillCheckSquareFill
-                  onClick={() => navigate("/completed-trips/")}
+                  
                   className="h1 display-4 my-2"
                 />
-                <h1 className="display-4">{tripsCompleted.length}</h1>
+                <h1 className="display-4 text-dark">{tripsCompleted.length}</h1>
                 <h5>Completed</h5>
               </div>
             </div>
           </div>
           <div className="col-md-3">
-            <div className="card border-0 shadow">
-              <div className="card-body">
+            <div onClick={() => navigate("/customer-devices")} className="card border-0 shadow">
+              <div className="card-body text-center text-muted">
                 <BsFillCpuFill
-                  onClick={() => navigate("/customer-devices")}
+                  
                   className="h1 display-4 my-2"
                 />
-                <h1 className="display-4">{devicesData.length}</h1>
+                <h1 className="display-4 text-dark">{devicesData.length}</h1>
                 <h5>Devices</h5>
               </div>
             </div>

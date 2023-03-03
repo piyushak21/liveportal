@@ -19,7 +19,7 @@ const Devices = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/devices/getall", {
+      .get("/devices/getall", {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

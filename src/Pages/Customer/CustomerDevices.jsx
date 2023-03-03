@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Badge, Container } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { AiFillEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const CustomerDevices = () => {
@@ -12,7 +11,7 @@ const CustomerDevices = () => {
 
   const getDevicesData = () => {
     axios
-      .get(`http://localhost:8080/api/devices/get-user-device/${user_id}`, {
+      .get(`/devices/get-user-device/${user_id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
@@ -48,7 +47,7 @@ const CustomerDevices = () => {
                   <td>{index + 1}</td>
                   <td>{el.device_id}</td>
                   <td>{el.device_type}</td>
-                  <td>{el.sim_number}</td>
+                  <td>{el.sim_number ? el.sim_number : "NA"}</td>
                   <td>
                     {" "}
                     {el.status == "1" ? (

@@ -27,6 +27,7 @@ const AllRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      {/* //////////////Customer Routes/////////////// */}
       <Route
         path="/customer-dashboard"
         element={
@@ -43,14 +44,70 @@ const AllRoutes = () => {
           </CustomerProtected>
         }
       />
-      <Route path="/add-vehicle" element={<AddVehicle />} />
-      <Route path="/edit-vehicle/:vehicle_id" element={<EditVehicle />} />
-      <Route path="/vehicle-show/:vehicle_id" element={<VehicleShow />} />
-      <Route path="/ongoing-trips" element={<OngoingTripList />} />
-      <Route path="/ongoing-trips/:id" element={<OngoingTripView />} />
-      <Route path="/completed-trips/" element={<CompletedTripList />} />
-      <Route path="/completed-trips/:id" element={<CompletedTripView />} />
-      <Route path="/customer-devices" element={<CustomerDevices />} />
+      <Route
+        path="/add-vehicle"
+        element={
+          <CustomerProtected>
+            <AddVehicle />
+          </CustomerProtected>
+        }
+      />
+      <Route
+        path="/edit-vehicle/:vehicle_id"
+        element={
+          <CustomerProtected>
+            <EditVehicle />
+          </CustomerProtected>
+        }
+      />
+      <Route
+        path="/vehicle-show/:vehicle_id"
+        element={
+          <CustomerProtected>
+            <VehicleShow />
+          </CustomerProtected>
+        }
+      />
+      <Route
+        path="/ongoing-trips"
+        element={
+          <CustomerProtected>
+            <OngoingTripList />
+          </CustomerProtected>
+        }
+      />
+      <Route
+        path="/ongoing-trips/:id"
+        element={
+          <CustomerProtected>
+            <OngoingTripView />
+          </CustomerProtected>
+        }
+      />
+      <Route
+        path="/completed-trips/"
+        element={
+          <CustomerProtected>
+            <CompletedTripList />
+          </CustomerProtected>
+        }
+      />
+      <Route
+        path="/completed-trips/:id"
+        element={
+          <CustomerProtected>
+            <CompletedTripView />
+          </CustomerProtected>
+        }
+      />
+      <Route
+        path="/customer-devices"
+        element={
+          <CustomerProtected>
+            <CustomerDevices />
+          </CustomerProtected>
+        }
+      />
       {/* /////////////////Admin Routes/////////// */}
       <Route
         path="/admin-dashboard"
@@ -60,14 +117,70 @@ const AllRoutes = () => {
           </AdminProtected>
         }
       />
-      <Route path="/devices" element={<Devices />} />
-      <Route path="/devices-add" element={<AddDevices />} />
-      <Route path="/devices-edit/:id" element={<EditDevices />} />
-      <Route path="/devices-show/:id" element={<DeviceShow />} />
-      <Route path="/users" element={<User />} />
-      <Route path="/users-add" element={<AddUser />} />
-      <Route path="/users-edit/:user_id" element={<EditUser />} />
-      <Route path="/users-show/:user_id" element={<ShowUser />} />
+      <Route
+        path="/devices"
+        element={
+          <AdminProtected>
+            <Devices />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/devices-add"
+        element={
+          <AdminProtected>
+            <AddDevices />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/devices-edit/:id"
+        element={
+          <AdminProtected>
+            <EditDevices />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/devices-show/:id"
+        element={
+          <AdminProtected>
+            <DeviceShow />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/users"
+        element={
+          <AdminProtected>
+            <User />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/users-add"
+        element={
+          <AdminProtected>
+            <AddUser />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/users-edit/:user_id"
+        element={
+          <AdminProtected>
+            <EditUser />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/users-show/:user_id"
+        element={
+          <AdminProtected>
+            <ShowUser />
+          </AdminProtected>
+        }
+      />
     </Routes>
   );
 };

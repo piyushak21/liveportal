@@ -25,7 +25,7 @@ const AddDevice = () => {
       data.status
     ) {
       axios
-        .post("http://localhost:8080/api/devices/add-device", data, {
+        .post("/devices/add-device", data, {
           headers: { authorization: `bearer ${token}` },
         })
         .then((res) => {

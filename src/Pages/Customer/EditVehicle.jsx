@@ -4,11 +4,10 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import styles from "../../CSS/VehicleEdit.module.css";
 import { Container } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const EditVehicle = () => {
-  const navigate = useNavigate();
   const { vehicle_id } = useParams();
   const [idData, setIdData] = useState(["starkenn"]);
   const [data, setData] = useState([]);
@@ -20,7 +19,7 @@ const EditVehicle = () => {
   useEffect(() => {
     /////////Getting Data of vehicle
     axios
-      .get(`http://localhost:8080/api/vehicles/vehicle-card/${vehicle_id}`, {
+      .get(`/vehicles/vehicle-card/${vehicle_id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
@@ -32,7 +31,7 @@ const EditVehicle = () => {
 
     ///getting data of iot remaining
     axios
-      .get("http://localhost:8080/api/vehicles/get-iot", {
+      .get("/vehicles/get-iot", {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
@@ -44,7 +43,7 @@ const EditVehicle = () => {
 
     ///getting ecu remaining
     axios
-      .get("http://localhost:8080/api/vehicles/get-ecu", {
+      .get("/vehicles/get-ecu", {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
@@ -67,13 +66,9 @@ const EditVehicle = () => {
       data.featureset
     ) {
       axios
-        .put(
-          `http://localhost:8080/api/vehicles/editvehicle/${user_id}/${vehicle_id}`,
-          data,
-          {
-            headers: { authorization: `bearer ${token}` },
-          }
-        )
+        .put(`/vehicles/editvehicle/${user_id}/${vehicle_id}`, data, {
+          headers: { authorization: `bearer ${token}` },
+        })
         .then((res) => {
           console.log(res);
           alert("Data Updated Successfully");

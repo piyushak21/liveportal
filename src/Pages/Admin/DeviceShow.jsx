@@ -13,7 +13,7 @@ const DeviceShow = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/devices/get-device-card/${id}`, {
+      .get(`/devices/get-device-card/${id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

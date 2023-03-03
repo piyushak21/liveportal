@@ -6,40 +6,68 @@ import axios from "axios";
 const CompletedTripList = () => {
   const [tripData, setTripData] = useState();
   const [totalTrip, setTotalTrip] = useState();
+  const [offset, setOffset] = useState(0);
+  const [page, setPage] = useState(1);
   let token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = (async) => {
       axios
-        .get("http://localhost:8080/api/completedTrip/getCompletedTrips", {
+        .get(`/completedTrip/getCompletedTrips/${offset}`, {
           headers: { authorization: `bearer ${token}` },
         })
         .then((res) => {
           setTripData(res.data);
-          setTotalTrip(res.data.length);
         })
         .catch((err) => {
           console.log(err);
         });
     };
     fetchData();
-  }, []);
+
+    axios
+      .get("/completedTrip/getCompletedTrips/", {
+        headers: { authorization: `bearer ${token}` },
+      })
+      .then((res) => {
+        console.log(res);
+        setTotalTrip(res.data.length);
+      })
+      .catch((err) => console.log(err));
+  }, [offset]);
+
+  useEffect(() => {
+    console.log(offset);
+  }, [tripData]);
 
   const convertTime = (time) => {
     let updateStTime = new Date(time * 1000);
     return updateStTime.toLocaleString();
   };
 
+  const handleOffsetone = () => {
+    let x = totalTrip - 2;
+    if (offset < x) {
+      setOffset((offset) => offset + 2);
+      setPage((page) => page + 1);
+    }
+  };
+
+  const handleOffsettwo = () => {
+    if (offset >= 2) {
+      setOffset((prev) => prev - 2);
+      setPage((page) => page - 1);
+    }
+  };
+
   return (
     <Container className="my-5">
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between ">
         <div>
           <h4>Completed Trip List</h4>
-          <p>
-            <small>
-              <span>Total: {totalTrip}</span>
-            </small>
-          </p>
+          <small>
+            <span>Total: {totalTrip}</span>
+          </small>
         </div>
         <div>
           <Link to="/ongoing-trips">
@@ -47,7 +75,6 @@ const CompletedTripList = () => {
           </Link>
         </div>
       </div>
-
       {/* List of vehicles */}
       <Table striped hover>
         <thead>
@@ -91,6 +118,23 @@ const CompletedTripList = () => {
             ))}
         </tbody>
       </Table>
+      <div className="d-flex justify-content-end">
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            <li onClick={handleOffsettwo} className="page-item ">
+              <p className="page-link">Previous</p>
+            </li>
+
+            <li className="page-item">
+              <p className="page-link fw-bolder ">{page}</p>
+            </li>
+
+            <li onClick={handleOffsetone} className="page-item">
+              <p className="page-link ">Next</p>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </Container>
   );
 };

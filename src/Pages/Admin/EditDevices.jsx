@@ -3,14 +3,13 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import styles from "../../CSS/EditDevice.module.css";
 import axios from "axios";
 
 const EditDevices = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [idData, setIdData] = useState(["Starkenn"]);
   const [data, setData] = useState([]);
   let token = localStorage.getItem("token");
@@ -26,7 +25,7 @@ const EditDevices = () => {
       data.status
     ) {
       axios
-        .put(`http://localhost:8080/api/devices/edit-device/${id}`, data, {
+        .put(`/devices/edit-device/${id}`, data, {
           headers: { authorization: `bearer ${token}` },
         })
         .then((res) => {
@@ -43,7 +42,7 @@ const EditDevices = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/devices/get-device-card/${id}`, {
+      .get(`/devices/get-device-card/${id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

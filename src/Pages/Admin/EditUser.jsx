@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import styles from "../../CSS/EditUser.module.css";
 import axios from "axios";
 
 const EditUser = () => {
-  const navigate = useNavigate();
   const { user_id } = useParams();
   const [data, setData] = useState([]);
   const [idData, setIdData] = useState(["Starkenn"]);
@@ -41,11 +40,9 @@ const EditUser = () => {
         data.status
       ) {
         axios
-          .put(
-            `http://localhost:8080/api/customers/edit-user/${user_id}`,
-            data,
-            { headers: { authorization: `bearer ${token}` } }
-          )
+          .put(`/customers/edit-user/${user_id}`, data, {
+            headers: { authorization: `bearer ${token}` },
+          })
           .then((res) => {
             console.log(res);
             alert("User Updated Successfully");
@@ -77,7 +74,7 @@ const EditUser = () => {
       if (isData) {
         axios
           .put(
-            `http://localhost:8080/api/customers/edit-customer/${user_id}/${master_customer[0].customer_id}`,
+            `/customers/edit-customer/${user_id}/${master_customer[0].customer_id}`,
             master_customer,
             {
               headers: { authorization: `bearer ${token}` },
@@ -92,13 +89,9 @@ const EditUser = () => {
           });
       } else {
         axios
-          .post(
-            `http://localhost:8080/api/customers/add-customer/${user_id}`,
-            master_customer,
-            {
-              headers: { authorization: `bearer ${token}` },
-            }
-          )
+          .post(`/customers/add-customer/${user_id}`, master_customer, {
+            headers: { authorization: `bearer ${token}` },
+          })
           .then((res) => {
             console.log(res);
             alert("Data Added Successfully");
@@ -114,7 +107,7 @@ const EditUser = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/customers/get-user/${user_id}`, {
+      .get(`/customers/get-user/${user_id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
@@ -125,7 +118,7 @@ const EditUser = () => {
       });
 
     axios
-      .get(`http://localhost:8080/api/customers/getall/${user_id}`, {
+      .get(`/customers/getall/${user_id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

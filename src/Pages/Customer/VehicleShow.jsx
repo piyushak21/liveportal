@@ -16,7 +16,7 @@ const VehicleShow = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/vehicles/vehicle-card/${vehicle_id}`, {
+      .get(`/vehicles/vehicle-card/${vehicle_id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

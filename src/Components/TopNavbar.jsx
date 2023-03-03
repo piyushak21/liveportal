@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./TopNavbar.css";
 import { Navbar, Container, Nav, Offcanvas } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,6 +18,8 @@ import {
 //Navbar
 
 const TopNavbar = () => {
+  const token=localStorage.getItem("token")
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -37,9 +39,10 @@ const TopNavbar = () => {
     setOpen(!open);
   };
 
-  return (
-    <div>
-      <Navbar bg="light" expand="lg" className="topnav">
+  if(token) {
+    return(
+      <div>
+      <Navbar expand="lg" className="topnav">
         <Container fluid>
           <div className="maindiv">
             <div className="nav1">
@@ -73,15 +76,15 @@ const TopNavbar = () => {
                 <Nav>
                   <Nav.Link to="#">
                     <span>
-                      <BsFillHouseFill size={25} color="black" />
+                      <BsFillHouseFill size={20} color="grey" />
                     </span>
                   </Nav.Link>
                   <Nav.Link to="#">
                     <span>
                       <BsFillBellFill
                         onClick={handleNotification}
-                        size={25}
-                        color="black"
+                        size={20}
+                        color="grey"
                       />
                     </span>
                   </Nav.Link>
@@ -90,8 +93,8 @@ const TopNavbar = () => {
                     <span>
                       <BsFillGrid3X3GapFill
                         onClick={handleShow}
-                        color="black"
-                        size={25}
+                        color="grey"
+                        size={20}
                       />
                     </span>
                   </Nav.Link>
@@ -112,7 +115,7 @@ const TopNavbar = () => {
                     size={35}
                   />
                 </span>
-                <p>Admin Dash</p>
+                <p>Dashboard</p>
               </div>
               <div>
                 <span>
@@ -143,7 +146,7 @@ const TopNavbar = () => {
                     size={35}
                   />
                 </span>
-                <p>Customer Dash</p>
+                <p>Dashboard</p>
               </div>
               <div>
                 <span>
@@ -185,50 +188,82 @@ const TopNavbar = () => {
       {open ? (
         <div className="notificationdiv">
           <div>
-            <h1 className="my-3 border mx-4 py-3 rounded-2 shadow ">
+            <h5 className="my-3 border-0 mx-4 rounded-2 ">
               Notification
-            </h1>
+            </h5>
           </div>
 
-          <div className="d-flex flex-column gap-3 p-2 ">
-            <div className="d-flex justify-content-around border rounded-2 p-3 mx-3 shadow  ">
-              <div className="border rounded-4">
-                <h1 className="p-2">NA</h1>
+          <div className="d-flex flex-column gap-1">
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
               </div>
-              <div>
-                <p>You have Notification about vehicle Added</p>
-              </div>
-            </div>
-            <div className="d-flex justify-content-around border rounded-2 p-3 mx-3 shadow  ">
-              <div className="border rounded-4">
-                <h1 className="p-2">NA</h1>
-              </div>
-              <div>
-                <p>You have Notification about vehicle Added</p>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
               </div>
             </div>
-            <div className="d-flex justify-content-around border rounded-2 p-3 mx-3 shadow  ">
-              <div className="border rounded-4">
-                <h1 className="p-2">NA</h1>
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
               </div>
-              <div>
-                <p>You have Notification about vehicle Added</p>
-              </div>
-            </div>
-            <div className="d-flex justify-content-around border rounded-2 p-3 mx-3 shadow  ">
-              <div className="border rounded-4">
-                <h1 className="p-2">NA</h1>
-              </div>
-              <div>
-                <p>You have Notification about vehicle Added</p>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
               </div>
             </div>
-            <div className="d-flex justify-content-around border rounded-2 p-3 mx-3 shadow  ">
-              <div className="border rounded-4">
-                <h1 className="p-2">NA</h1>
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
               </div>
-              <div>
-                <p>You have Notification about vehicle Added</p>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
+              </div>
+            </div>
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
+              </div>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
+              </div>
+            </div>
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
+              </div>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
+              </div>
+            </div>
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
+              </div>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
+              </div>
+            </div>
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
+              </div>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
+              </div>
+            </div>
+            <div className="d-flex justify-content-around border-0 p-3 mx-2 border-bottom">
+              <div className="border rounded-2 align-self-center">
+                <h3 className="px-2"><BsFillCpuFill /></h3>
+              </div>
+              <div className="">
+                <p className="text-start ms-2 mb-1"><small>
+                You have Notification about vehicle Added</small></p>
               </div>
             </div>
           </div>
@@ -237,7 +272,12 @@ const TopNavbar = () => {
         ""
       )}
     </div>
-  );
+    )
+  } else{
+    return ""
+  }
+    
+  
 };
 
 export default TopNavbar;

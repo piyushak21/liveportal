@@ -12,7 +12,7 @@ const ShowUser = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/customers/get-user/${user_id}`, {
+      .get(`/customers/get-user/${user_id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {

@@ -11,7 +11,7 @@ const OngoingTripList = () => {
   useEffect(() => {
     const fetchData = (async) => {
       axios
-        .get("http://localhost:8080/api/ongoingTrip/getOngoingTrips", {
+        .get("/ongoingTrip/getOngoingTrips", {
           headers: { authorization: `bearer ${token}` },
         })
         .then((res) => {
@@ -35,11 +35,9 @@ const OngoingTripList = () => {
       <div className="d-flex justify-content-between my-4">
         <div>
           <h4>Ongoing Trips List</h4>
-          <p>
-            <small>
+          <small>
               <span>Total: {totalTrip}</span>
             </small>
-          </p>
         </div>
         <div>
           <Link to="/completed-trips">

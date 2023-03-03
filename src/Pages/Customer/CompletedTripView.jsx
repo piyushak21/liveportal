@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { Container, Tabs, Tab, ListGroup, Badge, Form } from "react-bootstrap";
 import { BsPinMapFill, BsArrowLeft } from "react-icons/bs";
 import Iframe from "react-iframe";
+import markerImage from "../../Assets/icons/marker.svg";
 
 const CompletedTripView = () => {
   // Get completed trip data
@@ -50,11 +51,10 @@ const CompletedTripView = () => {
   //   Set all trip analytics
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/completedTrip/getTripById/${id}`, {
+      .get(`/completedTrip/getTripById/${id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((res) => {
-        console.log(res);
         setTripData(res.data);
 
         // Set Map center
@@ -134,31 +134,32 @@ const CompletedTripView = () => {
           }
 
           // Set all notifications data
-          if (res.data[i].event === "NTF") {
-            let ntfData = res.data[i].jsondata;
-            let ntfparse = JSON.parse(ntfData);
-            if (ntfparse.notification === "Harsh Acceleration") {
-              setHarshacc(parseInt(harshacc) + 1);
-            }
-            if (ntfparse.notification === "Sleep Alert Missed") {
-              setSleepAlt(parseInt(sleeptAlt) + 1);
-            }
-            if (ntfparse.notification === "Lane Change") {
-              setLaneChng(parseInt(laneChng) + 1);
-            }
-            if (ntfparse.notification === "Speed Bump") {
-              setSpdBump(parseInt(spdBump) + 1);
-            }
-            if (ntfparse.notification === "Sudden Braking") {
-              setSuddenBrk(parseInt(suddenBrk) + 1);
-            }
-            if (ntfparse.notification === "Tailgating") {
-              setTailgating(parseInt(tailgating) + 1);
-            }
-            if (ntfparse.notification === "Overspeeding") {
-              setOverspeed(parseInt(overspeed) + 1);
-            }
-          }
+          // if (res.data[i].event === "NTF") {
+          //   console.log(res.data[i]);
+          //   let ntfData = res.data[i].jsondata;
+          //   let ntfparse = JSON.parse(ntfData);
+          //   if (ntfparse.notification === "Harsh Acceleration") {
+          //     setHarshacc(parseInt(harshacc) + 1);
+          //   }
+          //   if (ntfparse.notification === "Sleep Alert Missed") {
+          //     setSleepAlt(parseInt(sleeptAlt) + 1);
+          //   }
+          //   if (ntfparse.notification === "Lane Change") {
+          //     setLaneChng(parseInt(laneChng) + 1);
+          //   }
+          //   if (ntfparse.notification === "Speed Bump") {
+          //     setSpdBump(parseInt(spdBump) + 1);
+          //   }
+          //   if (ntfparse.notification === "Sudden Braking") {
+          //     setSuddenBrk(parseInt(suddenBrk) + 1);
+          //   }
+          //   if (ntfparse.notification === "Tailgating") {
+          //     setTailgating(parseInt(tailgating) + 1);
+          //   }
+          //   if (ntfparse.notification === "Overspeeding") {
+          //     setOverspeed(parseInt(overspeed) + 1);
+          //   }
+          // }
         }
       })
       .catch((err) => {
@@ -202,7 +203,7 @@ const CompletedTripView = () => {
   useEffect(() => {
     if (tripData.length > 0) {
       axios
-        .get(`http://localhost:8080/api/vehicles/getVehicleByTripId/${id}`, {
+        .get(`/vehicles/getVehicleByTripId/${id}`, {
           headers: { authorization: `bearer ${token}` },
         })
         .then((res) => {
@@ -267,12 +268,12 @@ const CompletedTripView = () => {
 
   //   Set faultcount locations and data
   const [markers, setMarkers] = useState([]);
-  const [showMarkers, setShowMarkers] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [filterMarker, setFilterMarker] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/completedTrip/getFaultsByTripId/${id}`, {
+      .get(`/completedTrip/getFaultsByTripId/${id}`, {
         headers: { authorization: `bearer ${token}` },
       })
       .then((response) => {
@@ -285,6 +286,7 @@ const CompletedTripView = () => {
             lng: parseFloat(response.data[l].lng),
             title: response.data[l].event,
             content: response.data[l].timestamp,
+            message: response.data[l].message,
           };
           parameters.push(params);
         }
@@ -295,14 +297,78 @@ const CompletedTripView = () => {
       });
   }, [id]);
 
-  const handleShowMarkers = (event) => {
-    // const { name, checked } = event.target;
-
-    setShowMarkers(!showMarkers);
-  };
+  useEffect(() => {
+    markers?.map((el) => {
+      if (el.message == 13) {
+        setSleepAlt((prev) => prev + 1);
+      }
+      if (el.message == 2) {
+        setHarshacc((prev) => prev + 1);
+      }
+      if (el.message == 3) {
+        setSuddenBrk((prev) => prev + 1);
+      }
+      if (el.message == 4) {
+        setSpdBump((prev) => prev + 1);
+      }
+      if (el.message == 5) {
+        setLaneChng((prev) => prev + 1);
+      }
+      if (el.message == 6) {
+        setTailgating((prev) => prev + 1);
+      }
+      if (el.message == 7) {
+        setOverspeed((prev) => prev + 1);
+      }
+    });
+  }, [markers]);
 
   const handleMarkerClick = (marker) => {
     setSelectedMarker(marker);
+  };
+
+  const handlecheckbox = (e) => {
+    const { value } = e.target;
+    console.log(markers);
+    if (e.target.checked) {
+      let x = [];
+      markers.map((el) => {
+        if (el.message == value) {
+          x.push(el);
+        }
+        setFilterMarker([...filterMarker, x]);
+      });
+    } else {
+      let y = [];
+
+      [].concat(...filterMarker)?.map((el) => {
+        if (el.message.toString() !== value) {
+          y.push(el);
+        }
+        setFilterMarker(y);
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log(filterMarker);
+    console.log(tailgating);
+  }, [filterMarker]);
+
+  // customized marker icons
+  const markerIcons = {
+    red: {
+      url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+      // scaledSize: new window.google.maps.Size(40, 40),
+    },
+    blue: {
+      url: markerImage,
+      // scaledSize: new window.google.maps.Size(30, 30),
+    },
+    green: {
+      url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+      // scaledSize: new window.google.maps.Size(40, 40),
+    },
   };
 
   return (
@@ -313,37 +379,44 @@ const CompletedTripView = () => {
       <div className="mb-3">
         <h4>{vehicle.vehicle_name} Completed Trip</h4>
       </div>
-      <button onClick={handleShowMarkers}>
+      {/* <button onClick={handleShowMarkers}>
         {showMarkers ? "Hide markers" : "Show markers"}
-      </button>
+      </button> */}
       {/* Google Map */}
       <LoadScript googleMapsApiKey="AIzaSyB3W_lCZn6WX-bJsVp0ar7Q0KJboGsKnPk">
         <GoogleMap
           mapContainerClassName="map-container"
           center={center}
-          zoom={14}
+          zoom={12}
         >
-          <Marker position={startPoint} />
-          {showMarkers &&
-            markers.map((marker, index) => (
-              <Marker
-                key={`${marker.id}-${index}`}
-                position={{ lat: marker.lat, lng: marker.lng }}
-                onClick={() => handleMarkerClick(marker)}
-              >
-                {selectedMarker === marker && (
-                  <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
-                    <div>
-                      <h5>{marker.title}</h5>
-                      {marker.content}
-                    </div>
-                  </InfoWindow>
-                )}
-              </Marker>
-            ))}
+          <Marker position={startPoint} icon={markerIcons.green} />
 
-          <Polyline path={path} />
-          <Marker position={endPoint} />
+          {[].concat(...filterMarker)?.map((marker, index) => (
+            <Marker
+              key={`${marker.id}-${index}`}
+              position={{ lat: marker.lat, lng: marker.lng }}
+              onClick={() => handleMarkerClick(marker)}
+              icon={markerIcons.blue}
+            >
+              {selectedMarker === marker && (
+                <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                  <div>
+                    <h5>{marker.title}</h5>
+                    {marker.content}
+                  </div>
+                </InfoWindow>
+              )}
+            </Marker>
+          ))}
+
+          <Polyline
+            path={path}
+            options={{
+              strokeColor: "#4252E0", // Set the color of the polyline path
+              strokeWeight: 4, // Set the stroke size of the polyline
+            }}
+          />
+          <Marker position={endPoint} icon={markerIcons.red} />
         </GoogleMap>
       </LoadScript>
 
@@ -522,8 +595,11 @@ const CompletedTripView = () => {
                         <div className="ms-2 me-auto">
                           <Form.Group className="" controlId="sl1">
                             <Form.Check
+                              disabled={sleeptAlt == 0}
                               type="checkbox"
                               label="Sleep Alert Missed"
+                              value="13"
+                              onChange={handlecheckbox}
                             />
                           </Form.Group>
                         </div>
@@ -550,8 +626,11 @@ const CompletedTripView = () => {
                         <div className="ms-2 me-auto">
                           <Form.Group className="" controlId="de1">
                             <Form.Check
+                              disabled={harshacc == 0}
                               type="checkbox"
                               label="Harsh Acceleration"
+                              value="2"
+                              onChange={handlecheckbox}
                             />
                           </Form.Group>
                         </div>
@@ -565,7 +644,13 @@ const CompletedTripView = () => {
                       >
                         <div className="ms-2 me-auto">
                           <Form.Group className="" controlId="de2">
-                            <Form.Check type="checkbox" label="Lane Change" />
+                            <Form.Check
+                              disabled={laneChng == 0}
+                              type="checkbox"
+                              label="Lane Change"
+                              value="5"
+                              onChange={handlecheckbox}
+                            />
                           </Form.Group>
                         </div>
                         <Badge bg="primary" pill>
@@ -578,7 +663,13 @@ const CompletedTripView = () => {
                       >
                         <div className="ms-2 me-auto">
                           <Form.Group className="" controlId="de3">
-                            <Form.Check type="checkbox" label="Speed Bump" />
+                            <Form.Check
+                              disabled={spdBump == 0}
+                              type="checkbox"
+                              label="Speed Bump"
+                              value="4"
+                              onChange={handlecheckbox}
+                            />
                           </Form.Group>
                         </div>
                         <Badge bg="primary" pill>
@@ -592,8 +683,11 @@ const CompletedTripView = () => {
                         <div className="ms-2 me-auto">
                           <Form.Group className="" controlId="de4">
                             <Form.Check
+                              disabled={suddenBrk == 0}
                               type="checkbox"
                               label="Sudden Braking"
+                              value="3"
+                              onChange={handlecheckbox}
                             />
                           </Form.Group>
                         </div>
@@ -607,7 +701,13 @@ const CompletedTripView = () => {
                       >
                         <div className="ms-2 me-auto">
                           <Form.Group className="" controlId="de5">
-                            <Form.Check type="checkbox" label="Tailgating" />
+                            <Form.Check
+                              disabled={tailgating == 0}
+                              type="checkbox"
+                              label="Tailgating"
+                              value="6"
+                              onChange={handlecheckbox}
+                            />
                           </Form.Group>
                         </div>
                         <Badge bg="primary" pill>
@@ -632,10 +732,16 @@ const CompletedTripView = () => {
                       >
                         <div className="ms-2 me-auto">
                           <Form.Group className="" controlId="sg1">
-                            <Form.Check type="checkbox" label="Overspeeding" />
+                            <Form.Check
+                              disabled={overspeed == 0}
+                              type="checkbox"
+                              label="Overspeeding"
+                              value="7"
+                              onChange={handlecheckbox}
+                            />
                           </Form.Group>
                         </div>
-                        <Badge bg="primary" pill>
+                        <Badge bg="primary" className="mx-1" pill>
                           {overspeed}
                         </Badge>
                       </ListGroup.Item>

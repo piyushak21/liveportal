@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
+
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
@@ -52,6 +53,7 @@ const Vehicle = () => {
                 <th>vehicle_registration</th>
                 <th>ECU</th>
                 <th>IoT</th>
+                <th>Featureset</th>
                 <th>status</th>
                 <th>Action</th>
               </tr>
@@ -65,7 +67,9 @@ const Vehicle = () => {
                     <td>{el.vehicle_registration}</td>
                     <td>{el.ecu}</td>
                     <td>{el.iot}</td>
+                    <td>{el.featureset}</td>
                     <td>
+                      {" "}
                       {el.status == "1" ? (
                         <Badge bg="success">Active</Badge>
                       ) : (
@@ -76,10 +80,11 @@ const Vehicle = () => {
                       <span>
                         <small>
                           <Link to={`/edit-vehicle/${el.vehicle_id}`}>
-                            Edit <AiFillEdit size={18} />
+                            Edit <AiFillEdit size={18} />{" "}
                           </Link>
                           |
                           <Link to={`/vehicle-show/${el.vehicle_id}`}>
+                            {" "}
                             View
                           </Link>
                         </small>

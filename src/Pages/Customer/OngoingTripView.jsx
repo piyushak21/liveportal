@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import {
   GoogleMap,
-  InfoWindow,
   LoadScript,
   Marker,
   Polyline,
@@ -36,10 +35,9 @@ const OngoingTripView = () => {
     setInterval(() => {
       const fetchData = (async) => {
         axios
-          .get(
-            `http://localhost:8080/api/ongoingTrip/getOngoingTripdataById/${id}`,
-            { headers: { authorization: `bearer ${token}` } }
-          )
+          .get(`/ongoingTrip/getOngoingTripdataById/${id}`, {
+            headers: { authorization: `bearer ${token}` },
+          })
           .then((res) => {
             console.log(res.data);
             // Set trip data
@@ -183,7 +181,7 @@ const OngoingTripView = () => {
   useEffect(() => {
     if (tripData.length > 0) {
       axios
-        .get(`http://localhost:8080/api/vehicles/getVehicleByTripId/${id}`, {
+        .get(`/vehicles/getVehicleByTripId/${id}`, {
           headers: { authorization: `bearer ${token}` },
         })
         .then((res) => {

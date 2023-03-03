@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import styles from "../CSS/Login.module.css";
 import axios from "axios";
 
 const Login = () => {
@@ -15,7 +14,7 @@ const Login = () => {
     e.preventDefault();
 
     axios
-      .post("http://13.127.22.231:3001/api/login/login-user", data)
+      .post("/login/login-user", data)
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("token", res.data.token);
@@ -38,45 +37,58 @@ const Login = () => {
     setData({ ...data, [name]: value });
   };
   return (
-    <div className={styles.maindiv}>
-      <div className={styles.logindiv}>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <div>
-              <h1>LOGIN</h1>
-            </div>
-            <div>
-              <InputGroup className="mb-3">
-                <Form.Control
-                  onChange={handleChange}
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </InputGroup>
-            </div>
+    <div className="container">
+      <div className="row justify-content-center mt-5">
+        <div className="col-md-4">
+          <div className="card">
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <div className="text-center">
+                    <h4 className="text-muted mb-0">LOGIN</h4>
+                    <p className="text-muted">
+                      <small>Portal 3.0</small>
+                    </p>
+                  </div>
+                  <div className="mt-3">
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        onChange={handleChange}
+                        name="email"
+                        type="email"
+                        placeholder="Email Address"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                      />
+                    </InputGroup>
+                  </div>
 
-            <div>
-              <InputGroup className="mb-3">
-                <Form.Control
-                  onChange={handleChange}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </InputGroup>
-            </div>
-            <div>
-              <Button className={styles.btn} type="submit" variant="primary">
-                Submit
-              </Button>{" "}
+                  <div>
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        onChange={handleChange}
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                      />
+                    </InputGroup>
+                  </div>
+                  <div>
+                    <Button
+                      className="btn w-100"
+                      type="submit"
+                      variant="primary"
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

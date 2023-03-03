@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { Alert, Button, Container, InputGroup } from "react-bootstrap";
-
-import { Link, useNavigate } from "react-router-dom";
-
+import { Button, Container, InputGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import styles from "../../CSS/AddUser.module.css";
 import axios from "axios";
@@ -11,8 +9,7 @@ import axios from "axios";
 
 const AddUser = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
-  let user_id = localStorage.getItem("user_id");
+
   let token = localStorage.getItem("token");
 
   const handleChange = (e) => {
@@ -35,7 +32,7 @@ const AddUser = () => {
         data.status
       ) {
         axios
-          .post(`http://localhost:8080/api/customers/add-user`, data, {
+          .post(`/customers/add-user`, data, {
             headers: { authorization: `bearer ${token}` },
           })
           .then((res) => {
